@@ -13,12 +13,11 @@ def gen():
         count += 1
         yield count
 
+
 g = gen()
 
 
 class UserLisrCreate(APIView):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
     def get(self, *args, **kwargs):
         try:
@@ -50,7 +49,7 @@ class UserRetrieveUpdateDelete(APIView):
                 users = json.load(file)
                 try:
                     for i in range(len(users)):
-                        if int(users[i]['id'])==pk:
+                        if int(users[i]['id']) == pk:
                             user = users[i]
 
                 except Exception as err:
@@ -60,8 +59,8 @@ class UserRetrieveUpdateDelete(APIView):
             pass
         return Response(user)
 
-    def put(self,*args,**kwargs):
-        new_user=self.request.data
+    def put(self, *args, **kwargs):
+        new_user = self.request.data
         pk = kwargs.get('pk')
         try:
             with open('users/users.json', 'r') as file:
@@ -87,8 +86,8 @@ class UserRetrieveUpdateDelete(APIView):
 
         return Response(new_user)
 
-    def delete(self,*args,**kwargs):
-        pk=kwargs.get('pk')
+    def delete(self, *args, **kwargs):
+        pk = kwargs.get('pk')
 
         try:
             with open('users/users.json', 'r') as file:
@@ -109,5 +108,3 @@ class UserRetrieveUpdateDelete(APIView):
             print('Not Found')
 
         return Response('deleted')
-
-
