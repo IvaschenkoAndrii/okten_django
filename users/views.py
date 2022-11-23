@@ -2,25 +2,46 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import json
 
+users = []
+
+
+def gen():
+    count = 0
+    while True:
+        count += 1
+        yield count
+
+
+g = gen()
+
 
 class UserLisrCreate(APIView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.users = []
+        # self.id=self.gen()
+
+    def gen(self):
+        count = 0
+        while True:
+            count += 1
+            yield count
 
     def get(self, *args, **kwargs):
         try:
             with open('users/users.json', 'r') as file:
-                self.users = json.load(file)
+                users = json.load(file)
         except Exception as err:
-            print(err)
-        return Response(self.users)
+            print('no found')
+        return Response(users)
 
     def post(self, *args, **kwargs):
+        id_user = str(next(g))
+        user = {'id': id_user, 'name': self.request.data['name'], 'age': self.request.data['age']}
+        users.append(user)
+        print(users)
         try:
             with open('users/users.json', 'w') as file:
-                user = self.request.data
-                self.users.append(user)
+                json.dump(users, file)
         except Exception as err:
             print(err)
         return Response(user)
