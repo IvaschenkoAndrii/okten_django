@@ -8,7 +8,6 @@ with open('users/users.json', 'r') as file:
 
 def gen():
     count = int(users[-1]['id']) if users else 0
-    # count = 0
     while True:
         count += 1
         yield count
