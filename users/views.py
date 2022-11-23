@@ -6,16 +6,12 @@ with open('users/users.json', 'r') as file:
     users = json.load(file)
 
 
-# users = []
-
-
 def gen():
     count = int(users[-1]['id']) if users else 0
     # count = 0
     while True:
         count += 1
         yield count
-
 
 g = gen()
 
@@ -78,7 +74,6 @@ class UserRetrieveUpdateDelete(APIView):
             user['name'] = new_user['name']
             user['age'] = new_user['age']
 
-            json.dump(users,file)
 
         except Exception as err:
             print('Not Found')
@@ -91,4 +86,28 @@ class UserRetrieveUpdateDelete(APIView):
             print('Not Found')
 
         return Response(new_user)
+
+    def delete(self,*args,**kwargs):
+        pk=kwargs.get('pk')
+
+        try:
+            with open('users/users.json', 'r') as file:
+                users = json.load(file)
+
+                for i in range(len(users)):
+                    if int(users[i]['id']) == pk:
+                        del users[i]
+
+        except Exception as err:
+            print('Not Found')
+
+        try:
+            with open('users/users.json', 'w') as file:
+                json.dump(users, file)
+
+        except Exception as err:
+            print('Not Found')
+
+        return Response('deleted')
+
 
