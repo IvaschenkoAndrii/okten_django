@@ -46,9 +46,6 @@ class UserLisrCreate(APIView):
 
 
 class UserRetrieveUpdateDelete(APIView):
-    # def __init__(self, **kwargs):
-    #     super().__init__(**kwargs)
-    #     self.users = users
 
     def get(self, *args, **kwargs):
         pk = kwargs.get('pk')
@@ -59,8 +56,39 @@ class UserRetrieveUpdateDelete(APIView):
                     for i in range(len(users)):
                         if int(users[i]['id'])==pk:
                             user = users[i]
-                except IndexError:
-                    return Response('Not Found')
+
+                except Exception as err:
+                    return Response('err')
+
         except Exception as err:
-            print('not found')
+            pass
         return Response(user)
+
+    def put(self,*args,**kwargs):
+        new_user=self.request.data
+        pk = kwargs.get('pk')
+        try:
+            with open('users/users.json', 'r') as file:
+                users = json.load(file)
+
+                for i in range(len(users)):
+                    if int(users[i]['id']) == pk:
+                        user = users[i]
+
+            user['name'] = new_user['name']
+            user['age'] = new_user['age']
+
+            json.dump(users,file)
+
+        except Exception as err:
+            print('Not Found')
+
+        try:
+            with open('users/users.json', 'w') as file:
+                json.dump(users, file)
+
+        except Exception as err:
+            print('Not Found')
+
+        return Response(new_user)
+
