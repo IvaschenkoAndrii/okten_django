@@ -1,8 +1,10 @@
+import os.path
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import json
 
-with open('users/users.json', 'r') as file:
+with open(os.path.join("users","users.json"), 'r') as file:
     users = json.load(file)
 
 
@@ -20,7 +22,7 @@ class UserLisrCreate(APIView):
 
     def get(self, *args, **kwargs):
         try:
-            with open('users/users.json', 'r') as file:
+            with open(os.path.join("users","users.json"), 'r') as file:
                 users = json.load(file)
         except Exception as err:
             print('no found')
@@ -32,7 +34,7 @@ class UserLisrCreate(APIView):
         users.append(user)
 
         try:
-            with open('users/users.json', 'w') as file:
+            with open(os.path.join("users","users.json"), 'w') as file:
                 json.dump(users, file)
         except Exception as err:
             print(err)
@@ -44,7 +46,7 @@ class UserRetrieveUpdateDelete(APIView):
     def get(self, *args, **kwargs):
         pk = kwargs.get('pk')
         try:
-            with open('users/users.json', 'r') as file:
+            with open(os.path.join("users","users.json"), 'r') as file:
                 users = json.load(file)
                 try:
                     for i in range(len(users)):
@@ -62,7 +64,7 @@ class UserRetrieveUpdateDelete(APIView):
         new_user = self.request.data
         pk = kwargs.get('pk')
         try:
-            with open('users/users.json', 'r') as file:
+            with open(os.path.join("users","users.json"), 'r') as file:
                 users = json.load(file)
 
                 for i in range(len(users)):
@@ -77,7 +79,7 @@ class UserRetrieveUpdateDelete(APIView):
             print('Not Found')
 
         try:
-            with open('users/users.json', 'w') as file:
+            with open(os.path.join("users","users.json"), 'w') as file:
                 json.dump(users, file)
 
         except Exception as err:
@@ -89,7 +91,7 @@ class UserRetrieveUpdateDelete(APIView):
         pk = kwargs.get('pk')
 
         try:
-            with open('users/users.json', 'r') as file:
+            with open(os.path.join("users","users.json"), 'r') as file:
                 users = json.load(file)
 
                 for i in range(len(users)):
@@ -100,7 +102,7 @@ class UserRetrieveUpdateDelete(APIView):
             print('Not Found')
 
         try:
-            with open('users/users.json', 'w') as file:
+            with open(os.path.join("users","users.json"), 'w') as file:
                 json.dump(users, file)
 
         except Exception as err:
