@@ -12,11 +12,11 @@ class CarsListCreateView(APIView):
         cars = CarModel.objects.all()
         serializer = CarSerializer(instance=cars, many=True)
         print(serializer)
-        res=[]
+        res = []
         for i in range(len(serializer.data)):
-            res.append( {"id": serializer.data[i]['id'],
-                    "name": serializer.data[i]['name'],
-                    "age":serializer.data[i]['age']})
+            res.append({"id": serializer.data[i]['id'],
+                        "name": serializer.data[i]['name'],
+                        "age": serializer.data[i]['age']})
         return Response(res, status.HTTP_200_OK)
 
     def post(self, *args, **kwargs):
