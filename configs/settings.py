@@ -71,7 +71,11 @@ WSGI_APPLICATION = 'configs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'car_db',
+        'USER':'root',
+        'PASSWORD':'rootroot',
+        'HOST':'localhost',
+        'PORT':3306
     }
 }
 
