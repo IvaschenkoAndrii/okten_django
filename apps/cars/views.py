@@ -25,6 +25,12 @@ class CarsListCreateView(APIView):
 
 
 class CarRetrieveUpdateDestroyView(APIView):
+
+    def get(self, *args, **kwargs):
+        pk = kwargs.get('pk')
+
+
+class CarRetrieveUpdateDestroyView(APIView):
     def get(self, *args, **kwargs):
         pk = kwargs.get('pk')
         exists = CarModel.objects.filter(pk=pk).exists()
@@ -32,8 +38,8 @@ class CarRetrieveUpdateDestroyView(APIView):
         if not exists:
             return Response('Not Found', status.HTTP_404_NOT_FOUND)
 
-        user = CarModel.objects.get(pk=pk)
-        serializer = CarSerializer(user)
+        car = CarModel.objects.get(pk=pk)
+        serializer = CarSerializer(car)
         return Response(serializer.data, status.HTTP_200_OK)
 
     def put(self, *args, **kwargs):
@@ -79,4 +85,4 @@ class CarRetrieveUpdateDestroyView(APIView):
 
         user = CarModel.objects.get(pk=pk)
         user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response('Item deleted',status.HTTP_204_NO_CONTENT)
