@@ -64,8 +64,8 @@ class CarRetrieveUpdateDestroyView(APIView):
         if not exists:
             return Response('Not Found', status.HTTP_404_NOT_FOUND)
 
-        user = CarModel.objects.get(pk=pk)
-        serializer = CarSerializer(user, data, partial=True)
+        car = CarModel.objects.get(pk=pk)
+        serializer = CarSerializer(car, data, partial=True)
 
         if not serializer.is_valid():
             return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
@@ -81,6 +81,6 @@ class CarRetrieveUpdateDestroyView(APIView):
         if not exists:
             return Response('Not Found', status.HTTP_404_NOT_FOUND)
 
-        user = CarModel.objects.get(pk=pk)
-        user.delete()
+        car = CarModel.objects.get(pk=pk)
+        car.delete()
         return Response('Item deleted', status.HTTP_204_NO_CONTENT)
