@@ -9,8 +9,8 @@ from .serializers import CarSerializer
 class CarsListCreateView(APIView):
 
     def get(self, *args, **kwargs):
-        users = CarModel.objects.all()
-        serializer = CarSerializer(instance=users, many=True)
+        cars = CarModel.objects.all()
+        serializer = CarSerializer(instance=cars, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
     def post(self, *args, **kwargs):
