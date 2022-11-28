@@ -3,21 +3,16 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import CarModel
-from .serializers import CarSerializer
+from .serializers import CarSerializer, CarSerializerGetAll
 
 
 class CarsListCreateView(APIView):
 
     def get(self, *args, **kwargs):
         cars = CarModel.objects.all()
-        serializer = CarSerializer(instance=cars, many=True)
-        print(serializer)
-        res = []
-        for i in range(len(serializer.data)):
-            res.append({"id": serializer.data[i]['id'],
-                        "name": serializer.data[i]['name'],
-                        "age": serializer.data[i]['age']})
-        return Response(res, status.HTTP_200_OK)
+        serializer = CarSerializerGetAll(instance=cars, many=True)
+
+        return Response(serializer.data, status.HTTP_200_OK)
 
     def post(self, *args, **kwargs):
         data = self.request.data
