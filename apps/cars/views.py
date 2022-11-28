@@ -11,7 +11,6 @@ class CarsListCreateView(APIView):
     def get(self, *args, **kwargs):
         cars = CarModel.objects.all()
         serializer = CarSerializerGetAll(instance=cars, many=True)
-
         return Response(serializer.data, status.HTTP_200_OK)
 
     def post(self, *args, **kwargs):
