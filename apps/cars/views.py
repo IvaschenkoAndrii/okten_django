@@ -38,7 +38,6 @@ class CarRetrieveUpdateDestroyView(APIView):
         serializer = CarSerializer(car)
         return Response(serializer.data, status.HTTP_200_OK)
 
-
     def put(self, *args, **kwargs):
         pk = kwargs.get('pk')
         data = self.request.data
@@ -56,7 +55,6 @@ class CarRetrieveUpdateDestroyView(APIView):
         serializer.save()
         return Response(serializer.data, status.HTTP_200_OK)
 
-
     def patch(self, *args, **kwargs):
         pk = kwargs.get('pk')
         data = self.request.data
@@ -73,7 +71,6 @@ class CarRetrieveUpdateDestroyView(APIView):
 
         serializer.save()
         return Response(serializer.data, status.HTTP_200_OK)
-
 
     def delete(self, *args, **kwargs):
         pk = kwargs.get('pk')
