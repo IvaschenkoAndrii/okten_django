@@ -10,6 +10,7 @@ class CarSerializer(ModelSerializer):
         fields = ('id','name', 'age', 'seats', 'body_type','engine_volume')
 
 
+
 class CarSerializerGetAll(ModelSerializer):
     class Meta:
         model = CarModel
