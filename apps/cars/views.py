@@ -4,7 +4,6 @@ from .serializers import CarSerializer
 from .models import CarModel
 
 
-
 class CarListView(ListAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarSerializer

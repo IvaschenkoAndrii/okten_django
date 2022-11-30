@@ -5,5 +5,5 @@ from .views import AutoParkListCreateView, AddCarToAutoParkView
 urlpatterns = [
     path('', AutoParkListCreateView.as_view()),
     path('/<int:pk>/cars', AddCarToAutoParkView.as_view()),
-    # path('/cars', AddCarToAutoParkView.as_view())
+    path('/<int:pk>', AddCarToAutoParkView.as_view())
 ]

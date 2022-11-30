@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework.generics import ListCreateAPIView, GenericAPIView
+from rest_framework.generics import ListCreateAPIView, GenericAPIView, RetrieveUpdateDestroyAPIView
 
 from .models import AutoParkModel
 from .serializers import AutoParkSerializer
@@ -30,3 +30,8 @@ class AddCarToAutoParkView(ListCreateAPIView):
         auto_park = self.get_object()
         serializer = AutoParkSerializer(auto_park)
         return Response(serializer.data)
+
+
+class CarParkRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    queryset = AutoParkModel.objects.all()
+    serializer_class = AutoParkSerializer
