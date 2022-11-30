@@ -1,8 +1,8 @@
 from django.db import models
 
 
-class parkModel(models.Model):
+class AutoParkModel(models.Model):
     class Meta:
-        db_table = 'park'
+        db_table = 'auto_park'
 
-    name = 'park'
+    name = models.CharField(max_length=20)
