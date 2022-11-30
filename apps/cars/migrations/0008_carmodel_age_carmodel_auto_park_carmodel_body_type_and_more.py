@@ -8,7 +8,7 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('park', '0002_parkmodel_name'),
+        ('auto_park', '0002_parkmodel_name'),
         ('cars', '0007_remove_carmodel_age_remove_carmodel_body_type_and_more'),
     ]
 
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='carmodel',
             name='auto_park',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='cars', to='park.parkmodel'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='cars', to='auto_park.parkmodel'),
             preserve_default=False,
         ),
         migrations.AddField(

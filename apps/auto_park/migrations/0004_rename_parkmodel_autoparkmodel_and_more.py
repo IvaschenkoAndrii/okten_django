@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('cars', '0009_alter_carmodel_table'),
-        ('park', '0003_alter_parkmodel_table'),
+        ('auto_park', '0003_alter_parkmodel_table'),
     ]
 
     operations = [

@@ -1,7 +1,7 @@
 from django.db import models
 from django.core import validators as V
 
-from apps.park.models import AutoParkModel
+from apps.auto_park.models import AutoParkModel
 
 
 class CarModel(models.Model):
