@@ -14,7 +14,7 @@ class CarListView(ListAPIView):
         auto_park_id = query.get('auto_park_id')
 
         if auto_park_id:
-            queryset = queryset.filter(auto_park=auto_park_id)
+            queryset = queryset.filter(auto_park_id=auto_park_id)
 
         return queryset
 
