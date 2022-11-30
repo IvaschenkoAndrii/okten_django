@@ -13,7 +13,6 @@ class AutoParkListCreateView(ListCreateAPIView):
 
 class AddCarToAutoParkView(ListCreateAPIView):
     queryset = AutoParkModel.objects.all()
-    serializer_class = AutoParkSerializer
 
     def post(self, *args, **kwargs):
         auto_park = self.get_object()
@@ -23,6 +22,7 @@ class AddCarToAutoParkView(ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
 
         serializer.save(auto_park=auto_park)
+
         serializer = AutoParkSerializer(auto_park)
         return Response(serializer.data)
 
