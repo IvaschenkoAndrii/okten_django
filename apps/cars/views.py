@@ -2,7 +2,7 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListAPIView
 
 from .serializers import CarSerializer
 from .models import CarModel
-from ..auto_park.serializers import AutoParkSerializer
+
 
 
 class CarListView(ListAPIView):
@@ -11,12 +11,8 @@ class CarListView(ListAPIView):
 
     def get_queryset(self):
         query = self.request.query_params.dict()
-
         queryset = super().get_queryset()
-        print(queryset)
-
         auto_park_id = query.get('auto_park_id')
-        print(auto_park_id)
 
         if auto_park_id:
             queryset = queryset.filter(auto_park=auto_park_id)
