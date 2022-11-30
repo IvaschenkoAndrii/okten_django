@@ -6,12 +6,6 @@ from .models import CarModel
 class CarSerializer(ModelSerializer):
     class Meta:
         model = CarModel
-        # fields = '__all__'
-        fields = ('id','name', 'age', 'seats', 'body_type','engine_volume')
+        fields = '__all__'
+        # fields = ('id','name', 'age', 'seats', 'body_type','engine_volume')
 
-
-class CarSerializerGetAll(ModelSerializer):
-    class Meta:
-        model = CarModel
-        # fields = '__all__'
-        fields = ('id', 'name', 'age')

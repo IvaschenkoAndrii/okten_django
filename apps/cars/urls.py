@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import CarsListCreateView, CarRetrieveUpdateDestroyView
+from .views import CarListCreateView, CarRetrieveUpdateDestroyView
 
 urlpatterns = [
-    path('',CarsListCreateView.as_view()),
+    path('',CarListCreateView.as_view()),
     path('/<int:pk>',CarRetrieveUpdateDestroyView.as_view())
 ]
