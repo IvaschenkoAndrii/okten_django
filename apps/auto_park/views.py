@@ -27,16 +27,16 @@ class AddCarToAutoParkView(ListCreateAPIView):
         serializer = AutoParkSerializer(auto_park)
         return Response(serializer.data)
 
-    def get(self, *args, **kwargs):
-        auto_park = self.get_object()
-        serializer = AutoParkSerializer(auto_park)
-        return Response(serializer.data)
-
-    # def get(self,*args,**kwargs):
-    #     pk=kwargs.get('pk')
-    #     car=CarModel.objects.filter(auto_park_id=pk)
-    #     serializer = CarSerializer(car,many=True)
+    # def get(self, *args, **kwargs):
+    #     auto_park = self.get_object()
+    #     serializer = AutoParkSerializer(auto_park)
     #     return Response(serializer.data)
+
+    def get(self,*args,**kwargs):
+        pk=kwargs.get('pk')
+        car=CarModel.objects.filter(auto_park_id=pk)
+        serializer = CarSerializer(car,many=True)
+        return Response(serializer.data)
 
 
 
