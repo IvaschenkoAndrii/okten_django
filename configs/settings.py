@@ -28,6 +28,7 @@ ALLOWED_HOSTS = []
 APPEND_SLASH = False
 
 # Application definition
+AUTH_USER_MODEL='users.UserModel'
 
 INSTALLED_APPS = [
     'django.contrib.auth',
