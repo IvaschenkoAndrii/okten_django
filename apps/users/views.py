@@ -2,6 +2,7 @@ from rest_framework.generics import CreateAPIView, GenericAPIView, ListCreateAPI
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+from apps.auto_park.models import AutoParkModel
 from apps.auto_park.serializers import AutoParkSerializer
 
 from .models import UserModel
@@ -60,4 +61,10 @@ class AddListAutoParkToUserView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save(user=user)
 
+        return Response(serializer.data)
+
+    def get(self, *args, **kwargs):
+        pk = kwargs.get('pk')
+        auto_park = AutoParkModel.objects.filter(user_id=pk)
+        serializer = AutoParkSerializer(auto_park, many=True)
         return Response(serializer.data)
