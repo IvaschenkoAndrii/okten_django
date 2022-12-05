@@ -12,12 +12,11 @@ from .serializers import UserSerializer, UserSerializerMakeActive, UserSerialize
 
 class UserCreateView(CreateAPIView):
     serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsSuperUser,)
     queryset = UserModel.objects.all()
 
-
     def post(self, *args, **kwargs):
-        self.permission_classes = (IsAuthenticated,)
+        permission_classes = (IsAuthenticated,)
         data = self.request.data
 
         serializer = AutoParkSerializer(data=data)
@@ -25,6 +24,18 @@ class UserCreateView(CreateAPIView):
         serializer.save(user=self.request.user)
 
         return Response(serializer.data)
+
+    def get(self, *args, **kwargs):
+        pk = kwargs.get(self.request.user)
+        print(self.request.user)
+        auto_park = AutoParkModel.objects.filter(user_id=self.request.user)
+        serializer = AutoParkSerializer(auto_park, many=True)
+        return Response(serializer.data)
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            return IsAuthenticated(),
+        return IsSuperUser(),
 
 
 class UserActivationView(RetrieveUpdateDestroyAPIView):
@@ -74,8 +85,8 @@ class AddListAutoParkToUserView(GenericAPIView):
     #
     #     return Response(serializer.data)
 
-    def get(self, *args, **kwargs):
-        pk = kwargs.get('pk')
-        auto_park = AutoParkModel.objects.filter(user_id=pk)
-        serializer = AutoParkSerializer(auto_park, many=True)
-        return Response(serializer.data)
+    # def get(self, *args, **kwargs):
+    #     pk = kwargs.get('pk')
+    #     auto_park = AutoParkModel.objects.filter(user_id=pk)
+    #     serializer = AutoParkSerializer(auto_park, many=True)
+    #     return Response(serializer.data)
