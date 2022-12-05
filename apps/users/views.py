@@ -1,5 +1,8 @@
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView, GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+
+from apps.auto_park.serializers import AutoParkSerializer
 
 from .models import UserModel
 from .permissions import IsStaff, IsSuperUser
@@ -42,5 +45,19 @@ class UserMakeAdminView(RetrieveUpdateDestroyAPIView):
         serializer = UserSerializerMakeAdmin(user, data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+
+        return Response(serializer.data)
+
+
+class AddListAutoParkToUserView(GenericAPIView):
+    queryset = UserModel.objects.all()
+
+    def post(self, *args, **kwargs):
+        user = self.get_object()
+        data = self.request.data
+
+        serializer = AutoParkSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=user)
 
         return Response(serializer.data)
