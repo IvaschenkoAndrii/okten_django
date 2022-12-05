@@ -12,7 +12,6 @@ from .serializers import UserSerializer, UserSerializerMakeActive, UserSerialize
 
 class UserCreateView(CreateAPIView):
     serializer_class = UserSerializer
-    # queryset = UserModel.objects.all()
     permission_classes = (IsSuperUser,)
 
 
