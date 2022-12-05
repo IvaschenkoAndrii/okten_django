@@ -10,50 +10,15 @@ from .permissions import IsStaff, IsSuperUser
 from .serializers import UserSerializer, UserSerializerMakeActive, UserSerializerMakeAdmin
 
 
-class UserCreateView(CreateAPIView):
+class UserCreateView(CreateAPIView, RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
-    permission_classes = (IsSuperUser,)
-
-
-class UserActivationView(RetrieveUpdateDestroyAPIView):
-    serializer_class = UserSerializerMakeActive
-    permission_classes = (IsStaff,)
-
-    def patch(self, request, *args, **kwargs):
-        pk = kwargs.get('pk')
-        data = self.request.data
-
-        user = UserModel.objects.get(pk=pk)
-
-        serializer = UserSerializerMakeActive(user, data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return Response(serializer.data)
-
-
-class UserMakeAdminView(RetrieveUpdateDestroyAPIView):
-    serializer_class = UserSerializerMakeAdmin
-    permission_classes = (IsSuperUser,)
-
-    def patch(self, request, *args, **kwargs):
-        pk = kwargs.get('pk')
-        data = self.request.data
-
-        user = UserModel.objects.get(pk=pk)
-
-        serializer = UserSerializerMakeAdmin(user, data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return Response(serializer.data)
-
-
-class AddListAutoParkToUserView(GenericAPIView):
     queryset = UserModel.objects.all()
+    permission_classes = (IsSuperUser,)
 
     def post(self, *args, **kwargs):
         user = self.get_object()
+        print(user)
+
         data = self.request.data
 
         serializer = AutoParkSerializer(data=data)
@@ -62,8 +27,58 @@ class AddListAutoParkToUserView(GenericAPIView):
 
         return Response(serializer.data)
 
-    def get(self, *args, **kwargs):
-        pk = kwargs.get('pk')
-        auto_park = AutoParkModel.objects.filter(user_id=pk)
-        serializer = AutoParkSerializer(auto_park, many=True)
-        return Response(serializer.data)
+#
+# class UserActivationView(RetrieveUpdateDestroyAPIView):
+#     serializer_class = UserSerializerMakeActive
+#     permission_classes = (IsStaff,)
+#
+#     def patch(self, request, *args, **kwargs):
+#         pk = kwargs.get('pk')
+#         data = self.request.data
+#
+#         user = UserModel.objects.get(pk=pk)
+#
+#         serializer = UserSerializerMakeActive(user, data, partial=True)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#
+#         return Response(serializer.data)
+
+
+# class UserMakeAdminView(RetrieveUpdateDestroyAPIView):
+#     serializer_class = UserSerializerMakeAdmin
+#     permission_classes = (IsSuperUser,)
+#
+#     def patch(self, request, *args, **kwargs):
+#         pk = kwargs.get('pk')
+#         data = self.request.data
+#
+#         user = UserModel.objects.get(pk=pk)
+#
+#         serializer = UserSerializerMakeAdmin(user, data, partial=True)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#
+#         return Response(serializer.data)
+
+
+# class AddListAutoParkToUserView(GenericAPIView):
+#     queryset = UserModel.objects.all()
+#
+#     def post(self, *args, **kwargs):
+#         user = self.get_object()
+#         print(user)
+#
+#         data = self.request.data
+#
+#         serializer = AutoParkSerializer(data=data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save(user=user)
+#
+#         return Response(serializer.data)
+#
+#     def get(self, *args, **kwargs):
+#         pk = kwargs.get('pk')
+#         auto_park = AutoParkModel.objects.filter(user_id=pk)
+#         serializer = AutoParkSerializer(auto_park, many=True)
+#         return Response(serializer.data)
