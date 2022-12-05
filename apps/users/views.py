@@ -4,36 +4,27 @@ from rest_framework.response import Response
 
 from .models import UserModel
 from .permissions import IsStaff, IsSuperUser
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserSerializerMakeActive
 
 
 class UserCreateView(CreateAPIView):
     serializer_class = UserSerializer
-    queryset = UserModel.objects.all()
+    # queryset = UserModel.objects.all()
     permission_classes = (IsSuperUser,)
 
 
 class UserActivationView(RetrieveUpdateDestroyAPIView):
-    serializer_class = UserSerializer
-    queryset = UserModel.objects.all()
-    permission_classes = (AllowAny,)
+    serializer_class = UserSerializerMakeActive
+    permission_classes = (IsStaff,)
 
     def patch(self, request, *args, **kwargs):
         pk = kwargs.get('pk')
         data = self.request.data
+
         user = UserModel.objects.get(pk=pk)
-        serializer = UserSerializer(user, data, partial=True)
+
+        serializer = UserSerializerMakeActive(user, data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        print(serializer.data)
-        return Response(serializer.data)
 
-    # def post(self, request, *args, **kwargs):
-    #     pk = kwargs.get('pk')
-    #     data=self.request.data
-    #     user = UserModel.objects.filter(id=pk)
-    #     serializer = UserSerializer(user)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save(user=user)
-    #     print(serializer.data)
-    #     return Response(serializer.data)
+        return Response(serializer.data)

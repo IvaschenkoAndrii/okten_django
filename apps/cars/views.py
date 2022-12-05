@@ -1,7 +1,4 @@
-from rest_framework_simplejwt.authentication import JWTAuthentication
-
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from .models import CarModel
 from .serializers import CarSerializer
@@ -10,8 +7,6 @@ from .serializers import CarSerializer
 class CarListView(ListAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarSerializer
-
-
 
     def get_queryset(self):
         query = self.request.query_params.dict()

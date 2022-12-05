@@ -39,12 +39,11 @@ class CarListCreateAutoParkView(ListCreateAPIView):
     #     serializer = AutoParkSerializer(auto_park)
     #     return Response(serializer.data)
 
-    def get(self,*args,**kwargs):
-        pk=kwargs.get('pk')
-        car=CarModel.objects.filter(auto_park_id=pk)
-        serializer = CarSerializer(car,many=True)
+    def get(self, *args, **kwargs):
+        pk = kwargs.get('pk')
+        car = CarModel.objects.filter(auto_park_id=pk)
+        serializer = CarSerializer(car, many=True)
         return Response(serializer.data)
-
 
 
 class AutoParkRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):

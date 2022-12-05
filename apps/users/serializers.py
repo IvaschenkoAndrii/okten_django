@@ -29,3 +29,11 @@ class UserSerializer(ModelSerializer):
         user = UserModel.objects.create_user(**validated_data)
         return user
 
+
+class UserSerializerMakeActive(ModelSerializer):
+    class Meta:
+        model = UserModel
+
+        fields = (
+         'id', 'is_active'
+     )
