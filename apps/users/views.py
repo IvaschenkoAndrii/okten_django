@@ -1,6 +1,10 @@
+from contextvars import Token
+from urllib import request
+from django.http import JsonResponse
 from rest_framework.generics import CreateAPIView, GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from apps.auto_park.models import AutoParkModel
 from apps.auto_park.serializers import AutoParkSerializer
@@ -10,22 +14,20 @@ from .permissions import IsStaff, IsSuperUser
 from .serializers import UserSerializer, UserSerializerMakeActive, UserSerializerMakeAdmin
 
 
-class UserCreateView(CreateAPIView, RetrieveUpdateDestroyAPIView):
+class UserCreateView(ListCreateAPIView):
     serializer_class = UserSerializer
     queryset = UserModel.objects.all()
-    permission_classes = (IsSuperUser,)
+    permission_classes = (IsAuthenticated,)
 
-    def post(self, *args, **kwargs):
-        user = self.get_object()
-        print(user)
-
+    def post (self, *args, **kwargs):
         data = self.request.data
 
         serializer = AutoParkSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=user)
+        serializer.save(user=self.request.user)
 
         return Response(serializer.data)
+
 
 #
 # class UserActivationView(RetrieveUpdateDestroyAPIView):
