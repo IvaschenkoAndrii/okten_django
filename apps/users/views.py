@@ -26,14 +26,12 @@ class UserCreateView(CreateAPIView):
         return Response(serializer.data)
 
     def get(self, *args, **kwargs):
-        pk = kwargs.get(self.request.user)
-        print(self.request.user)
         auto_park = AutoParkModel.objects.filter(user_id=self.request.user)
         serializer = AutoParkSerializer(auto_park, many=True)
         return Response(serializer.data)
 
     def get_permissions(self):
-        if self.request.method == 'POST':
+        if self.request.method == 'POST' or self.request.method == 'GET':
             return IsAuthenticated(),
         return IsSuperUser(),
 
