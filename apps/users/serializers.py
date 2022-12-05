@@ -35,5 +35,14 @@ class UserSerializerMakeActive(ModelSerializer):
         model = UserModel
 
         fields = (
-         'id', 'is_active'
-     )
+            'id', 'is_active'
+        )
+
+
+class UserSerializerMakeAdmin(ModelSerializer):
+    class Meta:
+        model = UserModel
+
+        fields = (
+            'id', 'is_staff'
+        )
