@@ -15,6 +15,10 @@ class UserCreateView(CreateAPIView):
     permission_classes = (IsSuperUser,)
     queryset = UserModel.objects.all()
 
+
+
+
+
     def post(self, *args, **kwargs):
         permission_classes = (IsAuthenticated,)
         data = self.request.data
