@@ -16,8 +16,9 @@ from .permissions import IsStaff, IsSuperUser
 from .serializers import AvatarSerializer, UserSerializer, UserSerializerMakeActive, UserSerializerMakeAdmin
 
 
-class UserCreateView(CreateAPIView):
+class UserCreateView(ListCreateAPIView):
     serializer_class = UserSerializer
+    queryset = UserModel.objects.all()
     permission_classes = (IsSuperUser,)
 
 
@@ -84,5 +85,5 @@ class AddAvatarView(UpdateAPIView):
 
     def get_object(self):
         return self.request.user.profile
-    
+
 

@@ -41,7 +41,7 @@ class AddPhotoView(ListCreateAPIView):
     queryset = CarModel.objects.all()
 
     def post(self, *args, **kwargs):
-        car=self.get_object()
+        car = self.get_object()
         data = self.request.data
 
         serializer = PhotoSerializer(data=data)
@@ -49,6 +49,7 @@ class AddPhotoView(ListCreateAPIView):
         serializer.save(car=car)
 
         return Response(serializer.data)
+
 
 
     def get(self, *args, **kwargs):
