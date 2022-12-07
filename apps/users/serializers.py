@@ -45,7 +45,7 @@ class UserSerializer(ModelSerializer):
     def create(self, validated_data: dict):
         profile = validated_data.pop('profile')
         user = UserModel.objects.create_user(**validated_data)
-        ProfileModel.objects.create(**profile,user=user)
+        ProfileModel.objects.create(**profile, user=user)
         return user
 
 
@@ -65,3 +65,9 @@ class UserSerializerMakeAdmin(ModelSerializer):
         fields = (
             'id', 'is_staff'
         )
+
+
+class AvatarSerializer(ModelSerializer):
+    class Meta:
+        model = ProfileModel
+        fields = ('avatar',)

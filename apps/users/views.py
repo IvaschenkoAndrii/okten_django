@@ -1,4 +1,10 @@
-from rest_framework.generics import CreateAPIView, GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    GenericAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    UpdateAPIView,
+)
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
@@ -7,7 +13,7 @@ from apps.auto_park.serializers import AutoParkSerializer
 
 from .models import UserModel
 from .permissions import IsStaff, IsSuperUser
-from .serializers import UserSerializer, UserSerializerMakeActive, UserSerializerMakeAdmin
+from .serializers import AvatarSerializer, UserSerializer, UserSerializerMakeActive, UserSerializerMakeAdmin
 
 
 class UserCreateView(CreateAPIView):
@@ -70,3 +76,13 @@ class AddListAutoParkToUserView(GenericAPIView):
         if self.request.method == 'POST' or self.request.method == 'GET':
             return IsAuthenticated(),
         return IsSuperUser(),
+
+
+class AddAvatarView(UpdateAPIView):
+    serializer_class = AvatarSerializer
+    http_method_names = ('patch',)
+
+    def get_object(self):
+        return self.request.user.profile
+    
+
