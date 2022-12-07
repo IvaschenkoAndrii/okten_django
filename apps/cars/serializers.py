@@ -10,7 +10,8 @@ class CarSerializer(ModelSerializer):
         # fields = ('id','name', 'age', 'seats', 'body_type','engine_volume')
         exclude = ('auto_park',)
 
+
 class PhotoSerializer(ModelSerializer):
     class Meta:
-        model = CarModel
+        model = CarPhoto
         fields = ('photo',)
