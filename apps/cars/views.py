@@ -33,13 +33,10 @@ class CarRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 class AddPhotoView(CreateAPIView):
     serializer_class = PhotoSerializer
     queryset = CarModel.objects.all()
-    # http_method_names = ('patch',)
 
     def post(self, request, *args, **kwargs):
         car=self.get_object()
         data = self.request.data
-        print(car)
-        print(data)
 
         serializer = PhotoSerializer(data=data)
         serializer.is_valid(raise_exception=True)
