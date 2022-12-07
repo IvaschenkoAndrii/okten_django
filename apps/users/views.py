@@ -13,28 +13,6 @@ from .serializers import UserSerializer, UserSerializerMakeActive, UserSerialize
 class UserCreateView(CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = (IsSuperUser,)
-    queryset = UserModel.objects.all()
-
-
-    def post(self, *args, **kwargs):
-        permission_classes = (IsAuthenticated,)
-        data = self.request.data
-
-        serializer = AutoParkSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(user=self.request.user)
-
-        return Response(serializer.data)
-
-    def get(self, *args, **kwargs):
-        auto_park = AutoParkModel.objects.filter(user_id=self.request.user)
-        serializer = AutoParkSerializer(auto_park, many=True)
-        return Response(serializer.data)
-
-    def get_permissions(self):
-        if self.request.method == 'POST' or self.request.method == 'GET':
-            return IsAuthenticated(),
-        return IsSuperUser(),
 
 
 class UserActivationView(RetrieveUpdateDestroyAPIView):
@@ -74,18 +52,21 @@ class UserMakeAdminView(RetrieveUpdateDestroyAPIView):
 class AddListAutoParkToUserView(GenericAPIView):
     queryset = UserModel.objects.all()
 
-    # def post(self, *args, **kwargs):
-    #     user = self.get_object()
-    #     data = self.request.data
-    #
-    #     serializer = AutoParkSerializer(data=data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save(user=user)
-    #
-    #     return Response(serializer.data)
+    def post(self, *args, **kwargs):
+        data = self.request.data
 
-    # def get(self, *args, **kwargs):
-    #     pk = kwargs.get('pk')
-    #     auto_park = AutoParkModel.objects.filter(user_id=pk)
-    #     serializer = AutoParkSerializer(auto_park, many=True)
-    #     return Response(serializer.data)
+        serializer = AutoParkSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=self.request.user)
+
+        return Response(serializer.data)
+
+    def get(self, *args, **kwargs):
+        auto_park = AutoParkModel.objects.filter(user_id=self.request.user)
+        serializer = AutoParkSerializer(auto_park, many=True)
+        return Response(serializer.data)
+
+    def get_permissions(self):
+        if self.request.method == 'POST' or self.request.method == 'GET':
+            return IsAuthenticated(),
+        return IsSuperUser(),

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.core import validators as V
 
 from .managers import UserManager
 
@@ -18,3 +19,14 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     objects = UserManager()
+
+
+class ProfileModel(models.Model):
+    class Meta:
+        db_table = 'profile'
+
+    name = models.CharField(max_length=20)
+    surname = models.CharField(max_length=20)
+    age = models.IntegerField(validators=[V.MinValueValidator(18), V.MaxValueValidator(150)])
+    phone = models.CharField(max_length=10)
+    user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')

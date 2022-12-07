@@ -11,6 +11,9 @@ class CarListView(ListAPIView):
     def get_queryset(self):
         query = self.request.query_params.dict()
         queryset = super().get_queryset()
+
+        # CarModel.my_func.lt_seats(7)
+
         auto_park_id = query.get('name')
 
         if auto_park_id:

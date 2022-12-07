@@ -8,13 +8,29 @@ from apps.users.models import UserModel as User
 
 UserModel: Type[User] = get_user_model()
 
+from django.db import transaction
+
+from apps.auto_park.serializers import AutoParkSerializer
+
+from .models import ProfileModel
+
+
+class ProfileSerializer(ModelSerializer):
+    class Meta:
+        model = ProfileModel
+        fields = ('name', 'surname', 'age', 'phone')
+
 
 class UserSerializer(ModelSerializer):
+    # auto_parks = AutoParkSerializer(many=True, read_only=True)
+    profile = ProfileSerializer()
+
     class Meta:
         model = UserModel
 
         fields = (
-            'id', 'email', 'password', 'is_staff', 'is_superuser', 'is_active', 'created_at', 'updated_at', 'last_login'
+            'id', 'email', 'password', 'is_staff', 'is_superuser', 'is_active', 'created_at', 'updated_at',
+            'last_login', 'profile'
         )
 
         read_only_field = ('id', 'is_staff', 'is_superuser', 'is_active', 'created_at', 'updated_at', 'last_login')
@@ -25,8 +41,11 @@ class UserSerializer(ModelSerializer):
             }
         }
 
-    def create(self, validated_data):
+    @transaction.atomic
+    def create(self, validated_data: dict):
+        profile = validated_data.pop('profile')
         user = UserModel.objects.create_user(**validated_data)
+        ProfileModel.objects.create(**profile,user=user)
         return user
 
 
