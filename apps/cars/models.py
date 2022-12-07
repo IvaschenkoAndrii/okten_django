@@ -14,7 +14,7 @@ class CarModel(models.Model):
     name = models.CharField(max_length=20, unique=True, validators=[
         V.MinLengthValidator(2), V.MaxLengthValidator(20)
     ])
-    age = models.IntegerField(default=2000)
+    age = models.IntegerField(default=10)
     seats = models.IntegerField()
     body_type = models.CharField(max_length=20, blank=True)
     engine_volume = models.FloatField()
@@ -31,5 +31,5 @@ class CarPhoto(models.Model):
     class Meta:
         db_table = 'cars_photo'
 
-    photo1 = models.ImageField(upload_to=upload_photo, blank=True)
+    photo = models.ImageField(upload_to=upload_photo)
     car = models.ForeignKey(CarModel, on_delete=models.CASCADE, related_name='photo')

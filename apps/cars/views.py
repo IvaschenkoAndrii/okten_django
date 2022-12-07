@@ -1,4 +1,10 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    UpdateAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -30,11 +36,11 @@ class CarRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     serializer_class = CarSerializer
 
 
-class AddPhotoView(CreateAPIView):
+class AddPhotoView(ListCreateAPIView):
     serializer_class = PhotoSerializer
     queryset = CarModel.objects.all()
 
-    def post(self, request, *args, **kwargs):
+    def post(self, *args, **kwargs):
         car=self.get_object()
         data = self.request.data
 
@@ -42,6 +48,13 @@ class AddPhotoView(CreateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save(car=car)
 
+        return Response(serializer.data)
+
+
+    def get(self, *args, **kwargs):
+        pk = kwargs.get('pk')
+        photo = CarPhoto.objects.filter(car_id=pk)
+        serializer = PhotoSerializer(photo, many=True)
         return Response(serializer.data)
 
     def get_permissions(self):
