@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -30,24 +30,24 @@ class CarRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     serializer_class = CarSerializer
 
 
-class AddPhotoView(UpdateAPIView):
-    # serializer_class = PhotoSerializer
+class AddPhotoView(CreateAPIView):
+    serializer_class = PhotoSerializer
     queryset = CarModel.objects.all()
     # http_method_names = ('patch',)
 
-    def patch(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         car=self.get_object()
         data = self.request.data
         print(car)
         print(data)
 
-        serializer = PhotoSerializer(car, data, partial=True)
+        serializer = PhotoSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        # serializer.save()
+        serializer.save(car=car)
 
         return Response(serializer.data)
 
     def get_permissions(self):
-        if self.request.method == 'PATCH':
+        if self.request.method == 'POST':
             return IsAuthenticated(),
         return IsSuperUser(),

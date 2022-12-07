@@ -14,4 +14,4 @@ class CarSerializer(ModelSerializer):
 class PhotoSerializer(ModelSerializer):
     class Meta:
         model = CarPhoto
-        fields = ('photo',)
+        fields = ('photo1',)

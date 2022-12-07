@@ -32,5 +32,6 @@ class CarPhoto(models.Model):
     class Meta:
         db_table = 'cars_photo'
 
-    photo = models.ImageField(upload_to='upload_photo', blank=True)
+    photo1 = models.ImageField(upload_to='upload_photo', blank=True)
+    # photo=models.CharField(max_length=20)
     car = models.ForeignKey(CarModel, on_delete=models.CASCADE, related_name='photo')
