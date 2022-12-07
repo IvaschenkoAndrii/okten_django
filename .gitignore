@@ -1,5 +1,5 @@
 .idea
 .venv
-storage
+Pipfile.lock
 .env
-.gitignore
+storage

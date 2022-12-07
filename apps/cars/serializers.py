@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import CarModel
+from .models import CarModel, CarPhoto
 
 
 class CarSerializer(ModelSerializer):
