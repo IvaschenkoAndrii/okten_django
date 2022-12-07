@@ -1,7 +1,7 @@
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
 
 from .models import CarModel
-from .serializers import CarSerializer
+from .serializers import CarSerializer, PhotoSerializer
 
 
 class CarListView(ListAPIView):
@@ -25,3 +25,9 @@ class CarListView(ListAPIView):
 class CarRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarSerializer
+
+
+class AddPhotoView(UpdateAPIView):
+    serializer_class = PhotoSerializer
+    queryset = CarModel.objects.all()
+    http_method_names = ('patch',)
