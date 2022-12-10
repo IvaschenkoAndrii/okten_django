@@ -1,7 +1,3 @@
-import os
-
-from django.db import transaction
-
 from rest_framework.serializers import ModelSerializer
 
 from .models import CarModel, CarPhoto

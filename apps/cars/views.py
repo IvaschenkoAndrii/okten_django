@@ -42,20 +42,25 @@ class AddPhotoView(ListCreateAPIView):
 
     def post(self, *args, **kwargs):
         car = self.get_object()
-        data = self.request.data
+        data = self.request.FILES
 
         serializer = PhotoSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save(car=car)
 
+        serializer = CarSerializer(car)
+
         return Response(serializer.data)
 
-
+    # def get(self, *args, **kwargs):
+    #     pk = kwargs.get('pk')
+    #     photo = CarPhoto.objects.filter(car_id=pk)
+    #     serializer = PhotoSerializer(photo, many=True)
+    #     return Response(serializer.data)
 
     def get(self, *args, **kwargs):
-        pk = kwargs.get('pk')
-        photo = CarPhoto.objects.filter(car_id=pk)
-        serializer = PhotoSerializer(photo, many=True)
+        car = self.get_object()
+        serializer = PhotoSerializer(car.photo, many=True)
         return Response(serializer.data)
 
     def get_permissions(self):

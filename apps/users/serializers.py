@@ -6,11 +6,11 @@ from rest_framework.serializers import ModelSerializer
 
 from apps.users.models import UserModel as User
 
+from ..auto_park.serializers import AutoParkSerializer
+
 UserModel: Type[User] = get_user_model()
 
 from django.db import transaction
-
-from apps.auto_park.serializers import AutoParkSerializer
 
 from .models import ProfileModel
 
@@ -22,7 +22,7 @@ class ProfileSerializer(ModelSerializer):
 
 
 class UserSerializer(ModelSerializer):
-    # auto_parks = AutoParkSerializer(many=True, read_only=True)
+    auto_parks = AutoParkSerializer(many=True, read_only=True)
     profile = ProfileSerializer()
 
     class Meta:
@@ -30,7 +30,7 @@ class UserSerializer(ModelSerializer):
 
         fields = (
             'id', 'email', 'password', 'is_staff', 'is_superuser', 'is_active', 'created_at', 'updated_at',
-            'last_login', 'profile'
+            'last_login', 'profile','auto_parks'
         )
 
         read_only_field = ('id', 'is_staff', 'is_superuser', 'is_active', 'created_at', 'updated_at', 'last_login')
