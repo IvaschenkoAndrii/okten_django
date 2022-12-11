@@ -27,7 +27,7 @@ class ActivateUserView(GenericAPIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class RecoveryUserView(GenericAPIView):
+class RecoveryEmailUserView(GenericAPIView):
     permission_classes = (AllowAny,)
 
     def post(self, *args, **kwargs):
