@@ -55,7 +55,6 @@ class UserSerializer(ModelSerializer):
 class UserSerializerMakeActive(ModelSerializer):
     class Meta:
         model = UserModel
-
         fields = (
             'id', 'is_active'
         )
@@ -64,7 +63,6 @@ class UserSerializerMakeActive(ModelSerializer):
 class UserSerializerMakeAdmin(ModelSerializer):
     class Meta:
         model = UserModel
-
         fields = (
             'id', 'is_staff'
         )

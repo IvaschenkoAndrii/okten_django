@@ -3,7 +3,7 @@ import os
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 
-from core.services.jwt_service import ActivateToken, JWTService
+from core.services.jwt_service import ActivateToken, JWTService, RecoveryToken
 
 
 class EmailService:
@@ -18,12 +18,12 @@ class EmailService:
 
     @classmethod
     def register_email(cls, user):
-        token = JWTService.create_token(user,ActivateToken)
+        token = JWTService.create_token(user, ActivateToken)
         url = f'http://localhost:3000/activate/{token}'
         cls.__send_email(user.email, 'register.html', {'name': user.profile.name, 'url': url}, 'Register')
 
     @classmethod
-    def register_email(cls, user):
-        token = JWTService.create_token(user,ActivateToken)
-        url = f'http://localhost:3000/activate/{token}'
-        cls.__send_email(user.email, 'register.html', {'name': user.profile.name, 'url': url}, 'Register')
+    def recovery_by_email(cls, user):
+        token = JWTService.create_token(user, RecoveryToken)
+        url = f'http://localhost:3000/password/{token}'
+        cls.__send_email(user.email, 'recovery.html', {'name': user.profile.name, 'url': url}, 'Recovery')

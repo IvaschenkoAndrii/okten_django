@@ -1,11 +1,5 @@
-from rest_framework.generics import (
-    CreateAPIView,
-    GenericAPIView,
-    ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView,
-    UpdateAPIView,
-)
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from apps.auto_park.models import AutoParkModel
@@ -85,5 +79,3 @@ class AddAvatarView(UpdateAPIView):
 
     def get_object(self):
         return self.request.user.profile
-
-

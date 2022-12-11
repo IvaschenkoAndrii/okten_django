@@ -14,7 +14,7 @@ from core.exceptions.jwt_exception import JWTException
 
 UserModel: Type[User] = get_user_model()
 
-TokenClass = Type[BlacklistMixin| Token]
+TokenClass = Type[BlacklistMixin | Token]
 
 
 class ActivateToken(BlacklistMixin, Token):
@@ -25,6 +25,7 @@ class ActivateToken(BlacklistMixin, Token):
 class RecoveryToken(BlacklistMixin, Token):
     lifetime = ActionEnum.RECOVERY.exp_time
     token_type = ActionEnum.RECOVERY.token_type
+
 
 class JWTService:
 
@@ -42,4 +43,4 @@ class JWTService:
 
         token_res.blacklist()
         user_id = token_res.payload.get('user_id')
-        return get_object_or_404(UserModel,pk=user_id)
+        return get_object_or_404(UserModel, pk=user_id)
