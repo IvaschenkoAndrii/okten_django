@@ -1,6 +1,7 @@
 from typing import Type
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import check_password
 
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, get_object_or_404
@@ -38,8 +39,7 @@ class RecoveryEmailUserView(GenericAPIView):
 
         email = serializer.data['email']
         # user = UserModel.objects.get(email=email)
-
-        user=get_object_or_404(UserModel, email=email)
+        user = get_object_or_404(UserModel, email=email)
 
         EmailService.recovery_by_email(user)
 
@@ -57,8 +57,13 @@ class ChangeUserPasswordView(GenericAPIView):
         serializer = PasswordSerializer(data=data)
         serializer.is_valid(raise_exception=True)
 
+        old_password = user.password
         password = serializer.data['password']
 
         user.set_password(password)
+
+        if check_password(password, old_password):
+            return Response('the password must be different from the previous one')
+
         user.save()
         return Response(status=status.HTTP_200_OK)
