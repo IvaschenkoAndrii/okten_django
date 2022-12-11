@@ -3,7 +3,7 @@ from typing import Type
 from django.contrib.auth import get_user_model
 
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, get_object_or_404
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
@@ -37,7 +37,9 @@ class RecoveryEmailUserView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         email = serializer.data['email']
-        user = UserModel.objects.get(email=email)
+        # user = UserModel.objects.get(email=email)
+
+        user=get_object_or_404(UserModel, email=email)
 
         EmailService.recovery_by_email(user)
 
