@@ -51,7 +51,7 @@ class ChangeUserPasswordView(GenericAPIView):
 
     def post(self, *args, **kwargs):
         token = self.kwargs.get('token')
-        user = JWTService.validate_token(token, RecoveryToken)
+        user = JWTService.validate_token_password_recovery(token, RecoveryToken)
         data = self.request.data
 
         serializer = PasswordSerializer(data=data)
@@ -66,4 +66,5 @@ class ChangeUserPasswordView(GenericAPIView):
             return Response('the password must be different from the previous one')
 
         user.save()
+        JWTService.token_to_black_list(token, RecoveryToken)
         return Response(status=status.HTTP_200_OK)

@@ -44,3 +44,26 @@ class JWTService:
         token_res.blacklist()
         user_id = token_res.payload.get('user_id')
         return get_object_or_404(UserModel, pk=user_id)
+
+    @staticmethod
+    def validate_token_password_recovery(token, token_class: TokenClass):
+        try:
+            token_res = token_class(token)
+            token_res.check_blacklist()
+        except (Exception,):
+            raise JWTException
+
+        # token_res.blacklist()
+        user_id = token_res.payload.get('user_id')
+        return get_object_or_404(UserModel, pk=user_id)
+
+    @staticmethod
+    def token_to_black_list(token, token_class: TokenClass):
+        try:
+            token_res = token_class(token)
+            token_res.check_blacklist()
+        except (Exception,):
+            raise JWTException
+
+        token_res.blacklist()
+        return token_res
