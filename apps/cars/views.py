@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from ..users.permissions import IsSuperUser
+from .filters import CarFilter
 from .models import CarModel, CarPhoto
 from .serializers import CarSerializer, PhotoSerializer
 
@@ -16,6 +17,7 @@ from .serializers import CarSerializer, PhotoSerializer
 class CarListView(ListAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarSerializer
+    filterset_class = CarFilter
 
     def get_queryset(self):
         query = self.request.query_params.dict()
@@ -34,6 +36,7 @@ class CarListView(ListAPIView):
 class CarRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarSerializer
+
 
 
 class AddPhotoView(ListCreateAPIView):

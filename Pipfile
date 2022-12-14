@@ -8,6 +8,7 @@ status = "*"
 pillow = "*"
 django-dotenv = "*"
 emailservice = "*"
+django-filter = "*"
 
 [dev-packages]
 
