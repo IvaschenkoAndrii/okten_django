@@ -38,7 +38,6 @@ class RecoveryEmailUserView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         email = serializer.data['email']
-        # user = UserModel.objects.get(email=email)
         user = get_object_or_404(UserModel, email=email)
 
         EmailService.recovery_by_email(user)
