@@ -16,5 +16,4 @@ class CarFilter(filters.FilterSet):
 
     class Meta:
         model = CarModel
-        # .objects.filter(name__contains=)
         fields = ('age_gt', 'age_lt', 'brand_start','brand_end', 'brand_contains','price_gt', 'price_gte', 'price_lt', 'price_lte')
