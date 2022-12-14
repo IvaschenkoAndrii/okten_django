@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from apps.cars.models import CarModel
 from apps.cars.serializers import CarSerializer
 
+from core.pagination.page_pagination import PagePagination
+
 from .models import AutoParkModel
 from .serializers import AutoParkSerializer
 
@@ -12,6 +14,7 @@ from .serializers import AutoParkSerializer
 class AutoParkListCreateView(ListCreateAPIView):
     queryset = AutoParkModel.objects.all()
     serializer_class = AutoParkSerializer
+    pagination_class = PagePagination
 
 
 class CarListCreateAutoParkView(ListCreateAPIView):
