@@ -13,7 +13,7 @@ from .serializers import AvatarSerializer, UserSerializer, UserSerializerMakeAct
 class UserCreateView(ListCreateAPIView):
     serializer_class = UserSerializer
     queryset = UserModel.objects.all()
-    permission_classes = (IsSuperUser,)
+    permission_classes = (IsAuthenticated,)
 
 
 class UserActivationView(RetrieveUpdateDestroyAPIView):
