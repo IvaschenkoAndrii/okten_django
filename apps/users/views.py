@@ -56,11 +56,11 @@ class AddListAutoParkToUserView(GenericAPIView):
 
     def post(self, *args, **kwargs):
         data = self.request.data
-        user = self.get_object()
         serializer = AutoParkSerializer(data=data)
         serializer.is_valid(raise_exception=True)
+        user = self.get_object()
         auto_park: AutoParkModel = serializer.save()
-        auto_park.user.add(user)
+        auto_park.users.add(user)
         serializer = UserSerializer(user)
         return Response(serializer.data, status.HTTP_201_CREATED)
 
