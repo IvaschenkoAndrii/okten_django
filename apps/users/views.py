@@ -1,8 +1,9 @@
+from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from apps.auto_park.models import AutoParkModel
+from apps.auto_park.models import AutoParkModel, UsersAutoParksModel
 from apps.auto_park.serializers import AutoParkSerializer
 
 from .models import UserModel
@@ -55,12 +56,13 @@ class AddListAutoParkToUserView(GenericAPIView):
 
     def post(self, *args, **kwargs):
         data = self.request.data
-
+        user = self.get_object()
         serializer = AutoParkSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=self.request.user)
-
-        return Response(serializer.data)
+        auto_park: AutoParkModel = serializer.save()
+        auto_park.user.add(user)
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status.HTTP_201_CREATED)
 
     def get(self, *args, **kwargs):
         auto_park = AutoParkModel.objects.filter(user_id=self.request.user)

@@ -8,4 +8,12 @@ class AutoParkModel(models.Model):
         db_table = 'auto_park'
 
     name = models.CharField(max_length=20)
-    user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='auto_parks')
+    user = models.ManyToManyField(UserModel, through='UsersAutoParksModel', related_name='auto_parks')
+
+
+class UsersAutoParksModel(models.Model):
+    class Meta:
+        db_table = 'cars_auto_parks'
+
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    auto_park = models.ForeignKey(AutoParkModel, on_delete=models.CASCADE)
