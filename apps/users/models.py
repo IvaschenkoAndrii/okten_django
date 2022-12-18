@@ -39,5 +39,5 @@ class ProfileModel(models.Model):
     phone = models.CharField(max_length=10,validators=[
         V.RegexValidator(RegEx.PHONE.pattern,RegEx.PHONE.msg)
     ])
-    avatar = models.ImageField(upload_to=upload_avatar,blank=True)
-    user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')
+    # avatar = models.ImageField(upload_to=upload_avatar,blank=True)
+    # user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')

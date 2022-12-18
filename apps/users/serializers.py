@@ -32,10 +32,11 @@ class UserSerializer(ModelSerializer):
 
         fields = (
             'id', 'email', 'password', 'is_staff', 'is_superuser', 'is_active', 'created_at', 'updated_at',
-            'last_login', 'profile', 'auto_parks'
+            'last_login', 'auto_parks','profile'
         )
 
-        read_only_field = ('id', 'is_staff', 'is_superuser', 'is_active', 'created_at', 'updated_at', 'last_login')
+        read_only_field = (
+        'id', 'is_staff', 'is_superuser', 'is_active', 'created_at', 'updated_at', 'last_login', 'profile')
 
         extra_kwargs = {
             'password': {
