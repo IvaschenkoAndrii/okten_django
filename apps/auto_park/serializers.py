@@ -10,4 +10,5 @@ class AutoParkSerializer(ModelSerializer):
 
     class Meta:
         model = AutoParkModel
-        exclude = ('user',)
+        exclude = ('users',)
+
