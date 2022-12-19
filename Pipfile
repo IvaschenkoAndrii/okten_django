@@ -9,6 +9,9 @@ pillow = "*"
 django-dotenv = "*"
 emailservice = "*"
 django-filter = "*"
+mysqlclient = "*"
+djangorestframework-simplejwt = "*"
+
 
 [dev-packages]
 
