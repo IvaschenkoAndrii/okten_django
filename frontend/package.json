@@ -10,13 +10,23 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "axios": "^1.2.1"
+    "axios": "^1.2.1",
+    "npm-watch": "^0.11.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extentions": "js,jsx"
+    }
   },
   "eslintConfig": {
     "extends": [

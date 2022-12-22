@@ -11,6 +11,7 @@ const App = () => {
       [])
     return (
         <div>
+            <h4>Cars</h4>
             {cars.map(car=><div key={car.id}>{car.name}</div>)}
         </div>
     );
