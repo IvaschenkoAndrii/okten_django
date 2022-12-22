@@ -6,12 +6,12 @@ const App = () => {
     const[cars, setCars]=useState([])
 
   useEffect(()=>{
-    axios.get('/api.cars').then(value => setCars(value.data))
+    axios.get('/api/cars').then(value => setCars(value.data))
       },
       [])
     return (
         <div>
-            {cars.map(car=><div key={car.id}>car.name</div>)}
+            {cars.map(car=><div key={car.id}>{car.name}</div>)}
         </div>
     );
 };
