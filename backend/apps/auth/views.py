@@ -1,5 +1,8 @@
 from typing import Type
 
+from core.services.email_service import EmailService
+from core.services.jwt_service import ActivateToken, JWTService, RecoveryToken
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 
@@ -10,9 +13,6 @@ from rest_framework.response import Response
 
 from apps.auth.serializers import EmailSerializer, PasswordSerializer
 from apps.users.models import UserModel as User
-
-from core.services.email_service import EmailService
-from core.services.jwt_service import ActivateToken, JWTService, RecoveryToken
 
 UserModel: Type[User] = get_user_model()
 

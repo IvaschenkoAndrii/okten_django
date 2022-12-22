@@ -2,11 +2,13 @@ from typing import Type
 
 from django.contrib.auth import get_user_model
 
+
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
+
 
 from apps.auto_park.models import AutoParkModel
 from apps.auto_park.serializers import AutoParkSerializer

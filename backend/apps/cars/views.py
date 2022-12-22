@@ -5,7 +5,7 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
     UpdateAPIView,
 )
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from ..users.permissions import IsSuperUser
@@ -17,6 +17,7 @@ from .serializers import CarSerializer, PhotoSerializer
 class CarListView(ListAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarSerializer
+    permission_classes = (AllowAny,)
     filterset_class = CarFilter
 
     def get_queryset(self):
@@ -36,7 +37,6 @@ class CarListView(ListAPIView):
 class CarRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarSerializer
-
 
 
 class AddPhotoView(ListCreateAPIView):
