@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-djangorestframework = "*"
+djangorestframework = "3.13.1"
 status = "*"
 pillow = "*"
 django-dotenv = "*"
@@ -12,7 +12,9 @@ emailservice = "*"
 django-filter = "*"
 mysqlclient = "*"
 djangorestframework-simplejwt = "*"
-
+drf-yasg = "*"
+celery = {extras = ["redis"], version = "*"}
+django-celery-beat = "*"
 
 [dev-packages]
 isort = "*"
